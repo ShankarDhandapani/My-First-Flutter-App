@@ -20,10 +20,10 @@ class MyApp extends StatefulWidget {
   }
 }
 
-class _MyAppState extends State<MyApp>{
-  List<Map<String, String>> _products = []; 
+class _MyAppState extends State<MyApp> {
+  List<Map<String, String>> _products = [];
 
-void _addProduct(Map<String, String> product) {
+  void _addProduct(Map<String, String> product) {
     setState(() {
       _products.add(product);
     });
@@ -37,7 +37,7 @@ void _addProduct(Map<String, String> product) {
     print('[ProductManager _removeProduct]');
     print(_products);
   }
- 
+
   void _deleteProduct(int index) {
     setState(() {
       _products.removeAt(index);
@@ -54,22 +54,29 @@ void _addProduct(Map<String, String> product) {
           accentColor: Colors.deepPurple),
       // home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => ProductsPage(_products, _addProduct, _removeProduct, _deleteProduct),
+        '/': (BuildContext context) => ProductsPage(
+            _products, _addProduct, _removeProduct, _deleteProduct),
         '/admin': (BuildContext context) => ProductsAdminPage()
       },
-      onGenerateRoute: (RouteSettings sesttings) {
-        final List<String> pathElements = sesttings.name.split('/');
+      onGenerateRoute: (RouteSettings settings) {
+        final List<String> pathElements = settings.name.split('/');
         if (pathElements[0] != '') {
           return null;
         }
         if (pathElements[1] == 'product') {
           final int index = int.parse(pathElements[2]);
           return MaterialPageRoute<bool>(
-            builder: (BuildContext context) =>
-                ProductPage(_products[index]['title'], _products[index]['image']),
+            builder: (BuildContext context) => ProductPage(
+                _products[index]['title'], _products[index]['image']),
           );
         }
         return null;
+      },
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+          builder: (BuildContext context) => ProductsPage(
+              _products, _addProduct, _removeProduct, _deleteProduct),
+        );
       },
     );
   }
