@@ -52,14 +52,17 @@ class _ProductCreatePageSate extends State<ProductCreatePage> {
               });
             },
           ),
+          SizedBox(
+            height: 10.0,
+          ),
           RaisedButton(
             child: Text('SAVE'),
             onPressed: () {
               final Map<String, dynamic> product = {
                 'title': titleValue,
                 'description': descriptionValue,
-                'price' : priceValue,
-                'image' : 'assets/food.jpg'
+                'price': priceValue,
+                'image': 'assets/food.jpg'
               };
               widget.addProduct(product);
             },
