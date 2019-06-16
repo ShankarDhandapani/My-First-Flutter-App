@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './price_tag.dart';
+
 class Products extends StatefulWidget {
   final List<Map<String, dynamic>> products;
   Products(this.products);
@@ -10,8 +12,7 @@ class Products extends StatefulWidget {
   }
 }
 
-class _ProductsState extends State<Products>{
-
+class _ProductsState extends State<Products> {
   final List<Map<String, dynamic>> products;
   bool _favorite = false;
 
@@ -41,20 +42,7 @@ class _ProductsState extends State<Products>{
                 SizedBox(
                   width: 40.0,
                 ),
-                Container(
-                  padding: EdgeInsets.all(4.0),
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      borderRadius: BorderRadius.circular(10.0)),
-                  child: Text(
-                    '\$ ' + products[index]['price'].toString(),
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Merriweather'),
-                  ),
-                ),
+                PriceTag(products[index]['price'].toString())
               ],
             ),
           ),
@@ -69,11 +57,15 @@ class _ProductsState extends State<Products>{
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.info),
+                color: Theme.of(context).accentColor,
                 onPressed: () => Navigator.pushNamed<bool>(
                     context, '/product/' + index.toString()),
               ),
               IconButton(
-                icon: _favorite ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+                icon: _favorite
+                    ? Icon(Icons.favorite)
+                    : Icon(Icons.favorite_border),
+                color: Colors.red,
                 onPressed: () {
                   setState(() {
                     _favorite = !_favorite;
