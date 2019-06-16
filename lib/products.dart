@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 
-class Products extends StatelessWidget {
+class Products extends StatefulWidget {
   final List<Map<String, dynamic>> products;
+  Products(this.products);
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _ProductsState(products);
+  }
+}
 
-  Products(this.products) {
+class _ProductsState extends State<Products>{
+
+  final List<Map<String, dynamic>> products;
+  bool _favorite = false;
+
+  _ProductsState(this.products) {
     print('[Products Widget] Constructor');
   }
 
@@ -55,13 +67,18 @@ class Products extends StatelessWidget {
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlatButton(
-                child: Text(
-                  'Details',
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                ),
+              IconButton(
+                icon: Icon(Icons.info),
                 onPressed: () => Navigator.pushNamed<bool>(
                     context, '/product/' + index.toString()),
+              ),
+              IconButton(
+                icon: _favorite ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+                onPressed: () {
+                  setState(() {
+                    _favorite = !_favorite;
+                  });
+                },
               )
             ],
           )

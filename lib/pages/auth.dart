@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AuthPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _AuthPageState();
   }
 }
@@ -14,12 +13,6 @@ class _AuthPageState extends State<AuthPage> {
   String _password;
   bool _acceptTerms = false;
   bool _obscureText = true;
-
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +60,20 @@ class _AuthPageState extends State<AuthPage> {
                         });
                       },
                     ),
-                    FlatButton(
-                      onPressed: _toggle,
-                      child: Icon(_obscureText
-                          ? Icons.visibility_off
-                          : Icons.visibility),
+                    Row(
+                      children: <Widget>[
+                        Checkbox(
+                          value: !_obscureText,
+                          onChanged: (bool value) {
+                            setState(() {
+                              _obscureText = !value;
+                            });
+                          },
+                        ),
+                        Text(
+                          "Show Password",
+                        )
+                      ],
                     )
                   ],
                 ),
