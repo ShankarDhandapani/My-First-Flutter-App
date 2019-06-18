@@ -58,7 +58,10 @@ class ProductPage extends StatelessWidget {
               padding: EdgeInsets.all(10.0),
               child: RaisedButton(
                 color: Theme.of(context).accentColor,
-                child: Text('DELETE'),
+                child: Text(
+                  'BACK',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () => _showWarningDialog(context),
               ),
             )
